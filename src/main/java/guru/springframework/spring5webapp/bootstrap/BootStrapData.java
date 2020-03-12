@@ -15,13 +15,13 @@ public class BootStrapData implements CommandLineRunner {
 
     private final AuthorRepository authorRepository;
     private final BookRepository bookRepository;
-//    private final PublisherRepository publisherRepository;
+    private final PublisherRepository publisherRepository;
 
     // this will due dependency injection into the constructor for instances of these 2
-    public BootStrapData(AuthorRepository authorRepository, BookRepository bookRepository) {
+    public BootStrapData(AuthorRepository authorRepository, BookRepository bookRepository, PublisherRepository publisherRepository) {
         this.authorRepository = authorRepository;
         this.bookRepository = bookRepository;
-//        this.publisherRepository = publisherRepository;
+        this.publisherRepository = publisherRepository;
     }
 
     @Override
@@ -29,9 +29,17 @@ public class BootStrapData implements CommandLineRunner {
 
         Author eric = new Author("Eric", "Evans");
         Book ddd = new Book("Domain Driven Design", "123123");
+
+        Publisher publisher = new Publisher();
+        publisher.setName("SFG Publishing");
+        publisher.setAddress("850 S Longmore");
+
+        publisherRepository.save(publisher);
+
         eric.getBooks().add(ddd);
         ddd.getAuthors().add(eric);
 
+        ddd.setPublisher(publisher);
         // this saves it into your repository of the h2 database
         authorRepository.save(eric);
         bookRepository.save(ddd);
@@ -45,13 +53,13 @@ public class BootStrapData implements CommandLineRunner {
         authorRepository.save(rod);
         bookRepository.save(noEJB);
 
-//        Publisher pp = new Publisher("Zerell", "City");
-
-//        publisherRepository.save(pp);
-
+        publisher.getBooks().add(noEJB);
+        publisher.getBooks().add(ddd);
+        publisherRepository.save(publisher);
 
         System.out.println("Started in Bootstrap");
         System.out.println("Number of Books: " + bookRepository.count());
-//        System.out.println("Publisher Listed " + publisherRepository.count());
+        System.out.println("Publisher Listed " + publisherRepository.count());
+        System.out.println("Number of books in Publisher is " + publisher.getBooks().size());
     }
 }
