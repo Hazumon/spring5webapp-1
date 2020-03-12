@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Spring Framework Guru</title>
@@ -13,10 +13,10 @@
             <th>Title</th>
             <th>Publisher</th>
         </tr>
-        <tr>
-            <td>123</td>
-            <td>Sprin in Action</td>
-            <td>Wrox</td>
+        <tr th:each="book : ${books}">
+            <td th:text="${books.id}"> </td>
+            <td th:text="${books.title}"> </td>
+            <td th:text="${books.publisher.name}"> </td>
         </tr>
     </table>
 </body>

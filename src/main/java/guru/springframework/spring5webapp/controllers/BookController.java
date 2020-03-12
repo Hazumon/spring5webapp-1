@@ -15,10 +15,10 @@ public class BookController {
         this.bookRepository = bookRepository;
     }
 
-    @RequestMapping(path = "/books")
+    @RequestMapping("/books")
     public String getBooks(Model model){ // this returns a copy of the model to the view
 
 //       model.addAttribute("books", bookRepository.findAll());
-        return "books";
+        return "books/list"; // this tell spring to look for the list template inside the directory of books
     }
 }
